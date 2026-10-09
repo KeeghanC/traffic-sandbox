@@ -129,10 +129,6 @@ public final class RoadNetwork {
       return new Pose(
           a.x + (b.x - a.x) * t, a.y + (b.y - a.y) * t, Math.atan2(b.y - a.y, b.x - a.x));
     }
-
-    public List<Point2D.Double> junctionPoints() {
-      return curve;
-    }
   }
 
   public final List<MovementRoute> routes;

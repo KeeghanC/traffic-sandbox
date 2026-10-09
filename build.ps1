@@ -1,6 +1,8 @@
 $ErrorActionPreference = 'Stop'
 $projectRoot = $PSScriptRoot
 $classes = Join-Path $projectRoot 'build/classes'
+if ([IO.Path]::GetFullPath($classes) -ne ([IO.Path]::GetFullPath((Join-Path $PSScriptRoot 'build/classes')))) { throw 'Unexpected class output path' }
+if (Test-Path -LiteralPath $classes) { Remove-Item -LiteralPath $classes -Recurse -Force }
 New-Item -ItemType Directory -Path $classes -Force | Out-Null
 $sourceFiles = @(Get-ChildItem -LiteralPath (Join-Path $projectRoot 'src') -Filter '*.java' -Recurse | ForEach-Object FullName)
 & javac --release 11 -encoding UTF-8 -d $classes @sourceFiles

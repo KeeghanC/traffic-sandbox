@@ -9,9 +9,13 @@ if ($LASTEXITCODE -ne 0) { throw 'Test compilation failed' }
 $classPath = $classes + [IO.Path]::PathSeparator + $testClasses
 Push-Location -LiteralPath $PSScriptRoot
 try {
-    & java '-Djava.awt.headless=true' -ea -cp $classPath traffic.SimulationTest
+    & java '-Djava.awt.headless=true' -ea -cp $classPath traffic.ArchitectureTest
+    if ($LASTEXITCODE -ne 0) { throw 'Architecture tests failed' }
+    & java '-Djava.awt.headless=true' -ea -cp $classPath traffic.signals.ActuatedControllerTest
+    if ($LASTEXITCODE -ne 0) { throw 'Signal controller tests failed' }
+    & java '-Djava.awt.headless=true' -ea -cp $classPath traffic.engine.SimulationTest
     if ($LASTEXITCODE -ne 0) { throw 'Simulation tests failed' }
-    & java '-Djava.awt.headless=true' -ea -cp $classPath traffic.InterfaceTest
+    & java '-Djava.awt.headless=true' -ea -cp $classPath traffic.desktop.InterfaceTest
     if ($LASTEXITCODE -ne 0) { throw 'Interface tests failed' }
 } finally {
     Pop-Location

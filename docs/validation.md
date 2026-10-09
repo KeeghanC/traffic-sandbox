@@ -9,11 +9,13 @@ Environment: Windows desktop, JDK 14, Java 11-compatible compilation.
 | Playback | 1×, 2× and 5× fixed-step groupings produce the same state at equal simulated time |
 | Safety / control | Following gaps, receiving-lane blockage, priority, signal clearance and mode transitions pass |
 | Recovery | Trips resume after a blocked exit clears; all queued traffic drains when demand stops |
-| 30-minute stress | 383 completed trips; peak 129 active vehicles; 2,366 generated arrivals |
+| Isolated NZ actuation | 35 focused controller assertions: rest, calls, minimum, gap, maximum, clearance, configuration, trace and detector geometry |
+| Architecture | Package dependency checks pass; core has no Swing or desktop dependency |
+| 30-minute stress | 375 completed trips; peak 128 active vehicles |
 | Geometry / reservations | No collisions or conflicting reservations found in stress audits at one-second intervals |
-| Headless checks | 13,200,729 simulation assertions; Swing controls and three interface sizes pass |
-| Offscreen 200-car rendering | Approximately 498 FPS / 2.01 ms per paint, 1105 × 820 |
-| Live 200-car rendering | 64.2 FPS average, 1105 × 820, four-second measurement after warmup |
+| Headless checks | More than 13.2 million simulation assertions; Swing controls and three interface sizes pass |
+| Offscreen 200-car rendering | Approximately 421 FPS / 2.38 ms per paint, 1105 × 820 |
+| Live 200-car rendering | 63.5 FPS average, 1105 × 820, four-second measurement after warmup |
 | Live controls | Pause, reset, repeat, rates, modes, timing, speed keys and three window sizes pass |
 
 The live paint benchmark is a static 200-car rendering workload, using the real
@@ -22,7 +24,8 @@ map panel in a visible window. It isolates drawing cost; it does not simulate
 separate workload. Results depend on desktop load, display settings and JVM.
 
 The initial 16 ms Swing repaint request measured roughly 45 FPS on this Windows
-desktop. An 8 ms request, with Swing paint-event coalescing, measured 64.2 FPS.
+desktop. An 8 ms request, with Swing paint-event coalescing, measured 63.5 FPS
+after the NZ actuation and architecture changes.
 No global Windows timer settings were changed.
 
 High-demand queues grow because the conservative controller's capacity is lower
